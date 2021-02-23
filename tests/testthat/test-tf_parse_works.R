@@ -1,4 +1,69 @@
+test_that("tf_parse_flight_attempts", {
+  file <-
+    system.file("extdata",
+                "Results-IVP-Track-Field-Championship-2019-20-v2.pdf",
+                package = "JumpeR")
+
+  raw_results <- read_results(file)
+
+  df <-
+    tf_parse(
+      raw_results,
+      flights = TRUE,
+      flight_attempts = TRUE,
+      relay_athletes = TRUE
+    )
+
+  total_O_flight_1 <-
+    sum(df$Flight_1_Attempts == "O", na.rm = TRUE) # should be 17
+
+  expect_equal(total_O_flight_1, 17)
+})
+
+test_that("tf_parse_flights", {
+  file <-
+    system.file("extdata", "underdistance-2020-result.pdf", package = "JumpeR")
+
+  raw_results <- read_results(file)
+
+  df <-
+    tf_parse(
+      raw_results,
+      flights = TRUE,
+      flight_attempts = TRUE,
+      relay_athletes = TRUE
+    )
+
+  total_FOUL_flight_1 <-
+    sum(df$Flight_1 == "FOUL", na.rm = TRUE) # should be 8
+  total_FOUL_flight_2 <-
+    sum(df$Flight_2 == "FOUL", na.rm = TRUE) # should be 9
+  total_FOUL_flight_3 <-
+    sum(df$Flight_3 == "FOUL", na.rm = TRUE) # should be 6
+  total_FOUL_flight_4 <-
+    sum(df$Flight_4 == "FOUL", na.rm = TRUE) # should be 10
+  total_FOUL_flight_5 <-
+    sum(df$Flight_5 == "FOUL", na.rm = TRUE) # should be 11
+  total_FOUL_flight_6 <-
+    sum(df$Flight_6 == "FOUL", na.rm = TRUE) # should be 9
+
+  FOUL_list <-
+    c(
+      total_FOUL_flight_1,
+      total_FOUL_flight_2,
+      total_FOUL_flight_3,
+      total_FOUL_flight_4,
+      total_FOUL_flight_5,
+      total_FOUL_flight_6
+    )
+
+  expect_equal(FOUL_list, c(8, 9, 6, 10, 11, 9))
+})
+
+
 test_that("tf_parse_standard", {
+
+  skip_on_cran() # due to time, risk of external resources failing
 
   # import standard
   df_standard <- readRDS(system.file("extdata", "df_standard.rds", package = "JumpeR"))
@@ -16,17 +81,18 @@ test_that("tf_parse_standard", {
 
   # test external links
   # if(sum(sapply(c(url_1, url_2), is_link_broken)) > 0.9){
-  if (is_link_broken(url_1) == TRUE){
-    warning("A link to external data is broken")
-    expect_equal(2, 2)
-  }
+  raw_data <- try(read_results(url_1), silent = TRUE)
+
+  if(any(grep("error", class(raw_data)))){
+    skip("Link to external data is broken")
+    suppressWarnings(closeAllConnections())
+  } else {
 
   # list of sources
   sources <- c(file_1,
                file_2,
                file_3,
-               file_4,
-               url_1)
+               file_4)
                # url_2)
 
   # helper function to apply read_results across list of links
@@ -51,7 +117,8 @@ test_that("tf_parse_standard", {
   }
 
   # get test data to compare with standard
-  df_test <- Read_Map(sources)
+  suppressWarnings(df_test <- Read_Map(sources))
+  suppressWarnings(df_test$url_1 <- raw_data)
   df_test <- Parse_Map(df_test)
   df_test <- dplyr::bind_rows(df_test, .id = "source") %>%
     dplyr::select(-source)
@@ -67,28 +134,32 @@ test_that("tf_parse_standard", {
   # compare standard to test
   expect_equivalent(df_standard,
                     df_test)
+  }
 })
 
 test_that("tf_parse_attempts_splits_works", {
 
+  skip_on_cran() # due to risk of external resources failing
+
   url_2 <- "http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm"
 
-  if (is_link_broken(url_2) == TRUE) {
-    warning("Link to external data is broken")
-    expect_equal(2, 2)
+  raw_data <- try(read_results(url_2), silent = TRUE)
+
+  if(any(grep("error", class(raw_data)))){
+    skip("Link to external data is broken")
+    suppressWarnings(closeAllConnections())
   } else {
+
 
     df_standard_polevault_hytek <- readRDS(system.file("extdata", "df_standard_polevault_hytek.rds", package = "JumpeR"))
 
-  df <-
-    tf_parse(
-      read_results(
-        url_2
-      ),
-      flights = TRUE,
-      flight_attempts = TRUE,
-      split_attempts = TRUE
-    )
+    df <-
+      tf_parse(
+        raw_data,
+        flights = TRUE,
+        flight_attempts = TRUE,
+        split_attempts = TRUE
+      )
 
   df_test <- df %>%
     dplyr::filter(Event == "Men Pole Vault")

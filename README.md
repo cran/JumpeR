@@ -1,15 +1,25 @@
+[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/JumpeR?color=blue)](https://cran.r-project.org/package=JumpeR)
+[![](http://cranlogs.r-pkg.org/badges/grand-total/JumpeR?color=blue)](https://cran.r-project.org/package=JumpeR)
+[![](http://cranlogs.r-pkg.org/badges/JumpeR?color=blue)](https://cran.r-project.org/package=JumpeR)
+[![](http://cranlogs.r-pkg.org/badges/last-week/JumpeR?color=blue)](https://cran.r-project.org/package=JumpeR)
+
 # JumpeR
-The `JumpeR` `R` package is used for converting human readable track and field (athletics) results into dataframes for use in analysis.
+The `JumpeR` `R` package is used for converting human readable track and field (athletics) results into data frames for use in analysis.
+
+### From CRAN
+
+JumpeR is available on CRAN
+`install.packages(JumpeR)`
 
 ### Latest Development Version from Github
 
 `devtools::install_github("gpilgrim2670/JumpeR")`
 Package is still under heavy development so development versions will be unstable.
-Please wait for an upcoming CRAN release to acquire a stable version.
+Please use the stable CRAN release unless you have a very good reason not to.
 
 # Usage
 
-Version 0.1.2 of `JumpeR` reads track and field results into `R`, similar to what the `SwimmeR` package does for swimming results.
+`JumpeR` reads track and field results into `R`, similar to what the `SwimmeR` package does for swimming results.
 
 ## Supported Formats
 
@@ -30,7 +40,7 @@ tf_parse(
 ```
 ![Imported with JumpeR](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/HyTek_Cornell_60m_html_Import.png)
 
-[This](https://www.singaporeathletics.org.sg/download/28818/) is a Hy-tek .pdf results file, from the Singapore Masters Track and Field Association 2019 Championship,  This particular file contains the entire meet.
+[This](https://www.singaporeathletics.org.sg/download/28818/) is a Hy-tek .pdf results file, from the Singapore Masters Track and Field Association 2019 Championship.  It contains the entire meet.
 
 ![Will work](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/HyTek_SMTFA_longjump_html.png)
 
