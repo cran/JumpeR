@@ -1,7 +1,7 @@
-a356c19842343d05fc52ddfa4e67a9dc *DESCRIPTION
+485e7c9a425e8f18f9018e5cfe02df45 *DESCRIPTION
 552d8df6401d0cd2dc8f456cddbf0f97 *LICENSE
 3ee5f91f93c6ebf16591b26d2ed99a71 *NAMESPACE
-f27ea1832e6bd6aae94bcf0c46a40a4c *NEWS.md
+ede9aba88dd82391d5900c00ebebdcf6 *NEWS.md
 a08e8967f0c28f5ba69b8eb1dbb6dbd5 *R/add_row_numbers.R
 36fea04cca1eb21d641fff28c314b27a *R/attempts_remove.R
 420216cd6906679e4d9d0f112690c160 *R/attempts_split.R
@@ -20,7 +20,7 @@ a71119e3a1a17d84c63008ea104d3e2f *R/attempts_split_cols.R
 812b7c340fa20107b3da31541063c36b *R/globals.R
 6e921a5f3d7ea054d0f276f419f7b7a5 *R/is_link_broken.R
 3d8ca8b08a2a312ea1d0a0db6d405205 *R/lines_sort.R
-62f32147997df1477608a0f3e88adc0d *R/list_transform.R
+aee9372eac4a998945de97de3d2b880c *R/list_transform.R
 9d736415712f430b80ef18189eb30589 *R/math_format.R
 923fa0133fdd0e81a7d13abf5a09907b *R/math_format_helper.R
 4bdbbbdb3cae778823417ddba9de04d5 *R/metric_conversion.R
@@ -32,7 +32,7 @@ d7a0a9c6fb54b3f93049bdbd248a2e77 *R/standard_conversion.R
 29555ef69dbae82139ac378ff3628aca *R/tf_parse.R
 465b3e8f13ccd374946e7c12ad7ead54 *R/utils-pipe.R
 923e299fd9bfe32e57ee48834f5f6f4d *README.md
-a8e1e76fc837161b4618e84926e12b04 *inst/CITATION
+b89562628cba6d2fed47876d979a863d *inst/CITATION
 eb9af9319ab9f6af8c073282a7339b8f *inst/extdata/Results-IVP-Track-Field-Championship-2019-20-v2.pdf
 71847a6aaab70178a38c5a456a2daccc *inst/extdata/SMTFA-2019-Full-Results.pdf
 15777e0d2ef04b68e70bbe49d98406c9 *inst/extdata/day1-combo.pdf
@@ -75,7 +75,7 @@ c32efb91ff75ea83c14d83c5f194267f *man/pipe.Rd
 3aed82a8599227009455e980e7cbeeed *man/standard_conversion_helper.Rd
 2f0c39d3819550a98a995edae304efef *man/tf_parse.Rd
 70f49cf07869500ee33f8bc72e6371ce *tests/testthat.R
-018a0268054ced734c3accd8ff9a6249 *tests/testthat/test-flash_parse_works.R
+aec717fa753a5b8c2f6846b3ca79eb4e *tests/testthat/test-flash_parse_works.R
 38b52386272a92aa8ed6c2cea33d5820 *tests/testthat/test-math_format_works.R
 d7567f59114269fd6eb11b26c0f89c18 *tests/testthat/test-relay_athletes_works.R
-7de8c32b025b676013713965ccd963e0 *tests/testthat/test-tf_parse_works.R
+06e836f7ca8fd0933804004d04c75087 *tests/testthat/test-tf_parse_works.R
