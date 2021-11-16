@@ -14,6 +14,9 @@ JumpeR is available on CRAN
 ### Latest Development Version from Github
 
 `devtools::install_github("gpilgrim2670/JumpeR")`
+
+v0.3.0 - November 16th, 2021
+
 Package is still under heavy development so development versions will be unstable.
 Please use the stable CRAN release unless you have a very good reason not to.
 
@@ -26,7 +29,7 @@ Please use the stable CRAN release unless you have a very good reason not to.
 `JumpeR` currently supports reading in *single column* Hy-tek/Active.com style results in either .html or .pdf format.  `JumpeR` also supports Flash Results style results in .pdf format (but not html).
 
 ### Hy-tek/Active.com Results
-[These](http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm) are Hy-tek results in html format, from the 2019 Greg Page relays at Cornell University.  This particular file contains the entire meet.
+[These](https://www.leonetiming.com/2019/Indoor/GregPageRelays/Results.htm) are Hy-tek results in html format, from the 2019 Greg Page relays at Cornell University.  This particular file contains the entire meet.
 
 ![Will work](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/HyTek_Cornell_60m_html.png)
 
@@ -34,7 +37,7 @@ It can be imported into `R` using `JumpeR`:
 ```r
 tf_parse(
     read_results(
-      "http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm"
+      "https://www.leonetiming.com/2019/Indoor/GregPageRelays/Results.htm"
     )
   )
 ```
@@ -50,14 +53,14 @@ tf_parse(
     read_results(
       system.file("extdata", "SMTFA-2019-Full-Results.pdf", package = "JumpeR")
     ),
-    flights = TRUE
+    rounds = TRUE
   )
 ```
 ![Imported with JumpeR](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/HyTek_SMTFA_longjump_html_Import.png)
 
 ### Flash Results
 
-[This](https://www.flashresults.com/2019_Meets/Outdoor/06-05_NCAAOTF-Austin/001-1.pdf) is a Flash Results .pdf result, from the prelims of the 2019 NCAA Mens 100m Championships.
+[This](https://www.flashresults.com/2019_Meets/Outdoor/06-05_NCAAOTF-Austin/001-1.pdf) is a Flash Results .pdf result, from the prelims of the 2019 NCAA Men's 100m Championships.
 
 ![Will work](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/Flash_Results_NCAA_100m.png)
 
@@ -89,13 +92,13 @@ Flash Results also post .html version of results like [these](https://www.flashr
 
 * `file` is the output of `read_results` and is required.
 
-* `avoid` is a list of strings.  Rows in `file` containing any of those strings will not be included in the final results.  `avoid` is optional.  Incorrectly specifying it may lead to nonsense rows in the final dataframe, but will not cause an error.  Nonsense rows can be removed after import.  
+* `avoid` is a list of strings.  Rows in `file` containing any of those strings will not be included in the final results.  `avoid` is optional.  Incorrectly specifying it may lead to nonsense rows in the final data frame, but will not cause an error.  Nonsense rows can be removed after import.  
 
 * `typo` and `replacement` work together to fix typos, by replacing them with replacements.  Strings in `typo` will be replaced by strings in `replacement` in element index order - that is the first element of `typo` will be replaced everywhere it appears by the first element of `replacement`.  Uncorrected typos can cause lost data and nonsense rows.
 
 * `relay_athletes` defaults to `FALSE`.  Setting it to `TRUE` will cause `tf_parse` to try to pull out the names of athletes participating in relays.  Athlete names will be in separate columns called `Relay_Athlete_1`, `Relay_Athlete_2` etc. etc.
 
-[Here's](http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm) the Womens 4x400m relay from the 2019 Greg Page relays at Cornell University.
+[Here's](https://www.leonetiming.com/2019/Indoor/GregPageRelays/Results.htm) the Women's 4x400m relay from the 2019 Greg Page relays at Cornell University.
 
 ![Relay results](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/HyTek_Cornell_4x400mRelay_html.png)
 
@@ -103,18 +106,18 @@ Here's the same thing after importing with `JumpeR`
 ```r
 tf_parse(
     read_results(
-      "http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm"
+      "https://www.leonetiming.com/2019/Indoor/GregPageRelays/Results.htm"
     ),
     relay_athletes = TRUE
   )
 ```
 ![Relay results](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/HyTek_Cornell_4x400mRelay_html_Import.png)
 
-* `flights` records a unit of length for events where athletes get to try multiple times (long jump, javelin, pole vault etc. - basically the "field" events in track and field).  The default is `FALSE` but setting `flights` to `TRUE` will cause `tf_parse` to attempt to collect the distance/height (or FOUL) for each flight.  New columns called `Flight_1`, `Flight_2` etc. will be created.
+* `rounds` records a unit of length for events where athletes get to try multiple times (long jump, javelin, pole vault etc. - basically the "field" events in track and field).  The default is `FALSE` but setting `rounds` to `TRUE` will cause `tf_parse` to attempt to collect the distance/height (or FOUL) for each round.  New columns called `Round_1`, `Round_2` etc. will be created.
 
-[Here's](https://www.flashresults.com/2018_Meets/Outdoor/04-28_VirginiaGrandPrix/035-1.pdf) the long jump prelims from the 2019 Virginia Grand Prix at the University of Virginia with the "flights" highlighted in yellow.
+[Here's](https://www.flashresults.com/2018_Meets/Outdoor/04-28_VirginiaGrandPrix/035-1.pdf) the long jump prelims from the 2019 Virginia Grand Prix at the University of Virginia with the "rounds" highlighted in yellow.
 
-![Long jump flights](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/Flash_Results_VA_longjump_Flights.png)
+![Long jump rounds](https://raw.githubusercontent.com/gpilgrim2670/Pilgrim_Data/master/JumepR_readme_files/Flash_Results_VA_longjump_Flights.png)
 
 Here's the same thing after importing with `JumpeR`
 ```r
@@ -122,16 +125,16 @@ tf_parse(
     read_results(
       "https://www.flashresults.com/2018_Meets/Outdoor/04-28_VirginiaGrandPrix/035-1.pdf"
     ),
-    flights = TRUE
+    rounds = TRUE
   )
 ```
-![New flights columns](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/Flash_Results_VA_longjump_Flights_Import.png)
+![New rounds columns](https://raw.githubusercontent.com/gpilgrim2670/Pilgrim_Data/master/JumepR_readme_files/Flash_Results_VA_longjump_Rounds_Import.PNG)
 
-* `flight_attempts` records the outcome of each attempt (height) in the vertical jumping events (high jump, pole vault).  The default for `flight_attempts` is `FALSE` but setting it to `TRUE` will include these values (usually some combination of "X", "O" and "-") in new columns called `Flight_1_Attempts`, `Flight_2_Attempts` etc.  If `flight_attempts = TRUE` then `flights = TRUE` must be set as well.
+* `round_attempts` records the outcome of each attempt (height) in the vertical jumping events (high jump, pole vault).  The default for `round_attempts` is `FALSE` but setting it to `TRUE` will include these values (usually some combination of "X", "O" and "-") in new columns called `Round_1_Attempts`, `Round_2_Attempts` etc.  If `round_attempts = TRUE` then `rounds = TRUE` must be set as well.
 
-[Here's](https://www.flashresults.com/2018_Meets/Outdoor/04-20_DukeInvite/014-1.pdf) the pole vault results from the 2019 Duke Invite at (natch) Duke University with the "flight_attempts" highlighted in yellow and the "flights" circled in red.
+[Here's](https://www.flashresults.com/2018_Meets/Outdoor/04-20_DukeInvite/014-1.pdf) the pole vault results from the 2019 Duke Invite at (natch) Duke University with the "round_attempts" highlighted in yellow and the "rounds" circled in red.
 
-![Pole vault results](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/Flash_Results_Duke_polevault_Flight_Attempts.png)
+![Pole vault results](https://raw.githubusercontent.com/gpilgrim2670/Pilgrim_Data/master/JumepR_readme_files/Flash_Results_Duke_polevault_Flight_Attempts.png)
 
 Here's the same thing after importing with `JumpeR` - adding all these columns makes the results very wide.
 ```r
@@ -139,26 +142,26 @@ tf_parse(
     read_results(
       "https://www.flashresults.com/2018_Meets/Outdoor/04-20_DukeInvite/014-1.pdf"
     ),
-    flights = TRUE,
-    flight_attempts = TRUE
+    rounds = TRUE,
+    round_attempts = TRUE
   )
 ```
-![New flight_attempts columns](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/Flash_Results_Duke_polevault_Flight_Attempts_Split_Import.png)
+![New round_attempts columns](https://raw.githubusercontent.com/gpilgrim2670/Pilgrim_Data/master/JumepR_readme_files/Flash_Results_Duke_polevault_Round_Attempts_Import.PNG)
 
-* `split_attempts` setting `split_attempts = TRUE` will cause `tf_parse` to break each `Flight_X_Attempts` column into pieces.  A column containing "XXO" for example will become three columns, one containing "X", the second containing the second "X" and the third containing "O".  This will mean there are a lot of columns!  If `split_attempts = TRUE` then `flight_attempts` must be `TRUE` as well.
+* `split_attempts` setting `split_attempts = TRUE` will cause `tf_parse` to break each `Round_X_Attempts` column into pieces.  A column containing "XXO" for example will become three columns, one containing "X", the second containing the second "X" and the third containing "O".  This will mean there are a lot of columns!  If `split_attempts = TRUE` then `round_attempts` must be `TRUE` as well.
 
-Looking at those same [Duke pole vault results](https://www.flashresults.com/2018_Meets/Outdoor/04-20_DukeInvite/014-1.pdf), here's how using `split_attempts` works - adding all these columns make the results extremely wide.  I'm only going to show the first six split columns, called `Flight_1_Attempt_1`, `Flight_1_Attempt_2`, `Flight_1_Attempt_3` etc..
+Looking at those same [Duke pole vault results](https://www.flashresults.com/2018_Meets/Outdoor/04-20_DukeInvite/014-1.pdf), here's how using `split_attempts` works - adding all these columns make the results extremely wide.  I'm only going to show the first six split columns, called `Round_1_Attempt_1`, `Round_1_Attempt_2`, `Round_1_Attempt_3` etc..
 ```r
 tf_parse(
     read_results(
       "https://www.flashresults.com/2018_Meets/Outdoor/04-20_DukeInvite/014-1.pdf"
     ),
-    flights = TRUE,
-    flight_attempts = TRUE,
+    rounds = TRUE,
+    round_attempts = TRUE,
     split_attempts = TRUE
   )
 ```
-![New split columns](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/Flash_Results_Duke_polevault_Flight_Attempts_Split_Import.png)
+![New split columns](https://raw.githubusercontent.com/gpilgrim2670/Pilgrim_Data/master/JumepR_readme_files/Flash_Results_Duke_polevault_Round_Attempts_Split_Import.PNG)
 
 See `?tf_parse` for more information.
 
@@ -172,19 +175,19 @@ df <-
     read_results(
       "https://www.flashresults.com/2018_Meets/Outdoor/04-20_DukeInvite/014-1.pdf"
     ),
-    flights = TRUE,
-    flight_attempts = TRUE,
+    rounds = TRUE,
+    round_attempts = TRUE,
   )
 df %>% 
   attempts_split_long() %>% 
   select(Place, Name, Age, Team, Finals_Result, Event, Bar_Height, Attempt, Result)
 ```
 
-![Long format pole jump](https://github.com/gpilgrim2670/Pilgrim_Data/raw/master/JumepR_readme_files/Flash_Results_Duke_polevault_Flight_Attempts_Split_Import_Long.png)
+![Long format pole jump](https://raw.githubusercontent.com/gpilgrim2670/Pilgrim_Data/master/JumepR_readme_files/Flash_Results_Duke_polevault_Round_Attempts_Split_Import_Long.PNG)
 
 # Formatting Results
 
-By default all results (like the `Finals_Result` column) returned by `JumpeR` are characters, not numeric.  This is because lots of results don't fit `R`s notions of what a number is.  A result like `"1.65m"` for a long jump can't be a number because of the "m".  A result like `"1:45.32"` as a time can't be a number because of the ":".  Luckily `JUmpeR` is here to help with all of that.  Passing results to `math_format` will return results formatted as numeric, such that they can be used in math.
+By default all results (like the `Finals_Result` column) returned by `JumpeR` are characters, not numeric.  This is because lots of results don't fit `R`s notions of what a number is.  A result like `"1.65m"` for a long jump can't be a number because of the "m".  A result like `"1:45.32"` as a time can't be a number because of the ":".  Luckily `JumpeR` is here to help with all of that.  Passing results to `math_format` will return results formatted as numeric, such that they can be used in math.
 
 Please note however that `JumpeR` doesn't understand units.  Passing
 ```r
@@ -196,7 +199,7 @@ The best use of `math_format` is to convert an entire column, like `Finals_Resul
 ```r
 df <- tf_parse(
   read_results(
-    "http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm"
+    "https://www.leonetiming.com/2019/Indoor/GregPageRelays/Results.htm"
   )
 )
 

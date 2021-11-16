@@ -1,7 +1,5 @@
 #' Collects relay athletes as a data frame within \code{tf_parse}
 #'
-#' @author Greg Pilgrim \email{gpilgrim2670@@gmail.com}
-#'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr rename
 #' @importFrom dplyr bind_rows
@@ -16,26 +14,29 @@
 #' @importFrom purrr map
 #'
 #' @param x output from \code{read_results} followed by \code{add_row_numbers}
-#' @return returns a data frame of relay athletes and the associated performance row number
+#' @return returns a data frame of relay athletes and the associated performance
+#'   row number
 #'
 #' @seealso \code{collect_relay_athletes_data} runs inside of \code{tf_parse}
-#'
 
 collect_relay_athletes <- function(x){
 
   #### testing ####
-  # x <- read_results("http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm")
-  # x <- add_row_numbers(x)
+  # x <- read_results("http://leonetiming.com/2019/Indoor/GregPageRelays/Results.htm") %>%
+  # add_row_numbers()
+  # x <- as_lines_list_2
 
 
-  #### define strins ####
+  #### define strings ####
   relay_athlete_string <- "\n\\s*[1-4]\\)"
+  score_string <- "\\d{3}\\.?\\d?\\d?\\s|\\s{4,}\\d{1,}\\s"
 
   #### find row numbers of relay athletes ####
   row_numbs_relay_athlete <- x %>%
-    .[purrr::map_lgl(.,
-                     stringr::str_detect,
+    .[stringr::str_detect(.,
                      relay_athlete_string)] %>%
+    .[stringr::str_detect(.,
+                     score_string, negate = TRUE)] %>%
     stringr::str_extract_all("\\d{1,}$")
 
   #### if there are some rows with relay athletes pull them out ####
@@ -45,9 +46,10 @@ collect_relay_athletes <- function(x){
     #### clean up incoming data, mostly to remove grade/age strings and reaction times ####
     suppressWarnings(
       data_1_relay_athlete <- x %>%
-        .[purrr::map_lgl(.,
-                         stringr::str_detect,
+        .[stringr::str_detect(.,
                          relay_athlete_string)] %>%
+        .[stringr::str_detect(.,
+                         score_string, negate = TRUE)] %>%
         stringr::str_remove_all("\n") %>%
         stringr::str_replace_all("\\s(?=\\d)", "  ") %>% # make to sure have enough spaces between athlete names
         stringr::str_replace_all("(?<=[1-4]\\))   ", " NA  ") %>%

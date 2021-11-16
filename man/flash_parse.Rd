@@ -2,33 +2,37 @@
 % Please edit documentation in R/flash_parse.R
 \name{flash_parse}
 \alias{flash_parse}
-\title{Reads track and field results into a list of strings in preparation for parsing with \code{tf_parse}}
+\title{Reads track and field results into a list of strings in preparation for
+parsing with \code{tf_parse}}
 \usage{
 flash_parse(
   flash_file,
-  flash_flights = flights,
-  flash_flight_attempts = flight_attempts,
+  flash_rounds = rounds,
+  flash_round_attempts = round_attempts,
   flash_split_attempts = split_attempts
 )
 }
 \arguments{
-\item{flash_file}{a .pdf or .html file (could be a url) where containing track and field results.  Must be formatted in a "normal" fashion - see vignette}
+\item{flash_file}{a .pdf or .html file (could be a url) where containing
+track and field results.  Must be formatted in a "normal" fashion - see
+vignette}
 
-\item{flash_flights}{should tf_parse try to include flights for jumping/throwing events?  Defaults to \code{FALSE}}
+\item{flash_rounds}{should tf_parse try to include rounds for
+jumping/throwing events?  Defaults to \code{FALSE}}
 
-\item{flash_flight_attempts}{should tf_parse try to include outcomes for flights for vertical jumping events?  Defaults to \code{FALSE}}
+\item{flash_round_attempts}{should tf_parse try to include outcomes for
+rounds for vertical jumping events?  Defaults to \code{FALSE}}
 
-\item{flash_split_attempts}{should flight_attempts columns be split into individual attempts}
+\item{flash_split_attempts}{should round_attempts columns be split into
+individual attempts}
 }
 \value{
-a dataframe of track and field results
+a data frame of track and field results
 }
 \description{
 Outputs list of strings to be processed by \code{tf_parse}
 }
 \seealso{
-\code{tf_parse} is meant to be preceded by \code{\link{read_results}}
-}
-\author{
-Greg Pilgrim \email{gpilgrim2670@gmail.com}
+\code{tf_parse} is meant to be preceded by
+\code{\link{read_results}}
 }

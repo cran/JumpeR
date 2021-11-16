@@ -1,8 +1,8 @@
 #' Pulls out event labels from text
 #'
-#' Locates event labels in text of results output from \code{read_results} and their associated row numbers.  The resulting dataframe is joined back into results to include event names
-#'
-#' @author Greg Pilgrim \email{gpilgrim2670@@gmail.com}
+#' Locates event labels in text of results output from \code{read_results} and
+#' their associated row numbers.  The resulting data frame is joined back into
+#' results to include event names.
 #'
 #' @importFrom dplyr mutate
 #' @importFrom dplyr lead
@@ -14,12 +14,16 @@
 #' @importFrom purrr map_lgl
 #' @importFrom purrr map
 #'
-#' @param text output from \code{read_results} followed by \code{add_row_numbers}
-#' @return returns a dataframe with event names and row numbers to eventually be recombined with track and field results inside \code{tf_parse}
-
-#' @seealso \code{event_parse} is a helper function inside \code{\link{tf_parse}}
+#' @param text output from \code{read_results} followed by
+#'   \code{add_row_numbers}
+#' @return returns a data frame with event names and row numbers to eventually
+#'   be recombined with track and field results inside \code{tf_parse}
+#'
+#' @seealso \code{event_parse} is a helper function inside
+#'   \code{\link{tf_parse}}
 
 event_parse <- function(text) {
+
   # text <- as_lines_list_2
   # text <- raw_results[31] %>%
   #   unlist() %>%
@@ -28,7 +32,7 @@ event_parse <- function(text) {
   #### Build event names ####
   genders <- c("Women", 'Girls', "Men", "Boys", "Mixed")
   space1 <- " .*"
-  events_parts <- c("Yard", "Meter", "Y", "M", "Long", "High", "Triple", "Pole", "Pentathlon", "Decathlon", "Heptathlon", "Shot Put", "Javelin", "Weight", "Hammer", "Discus", "Medley")
+  events_parts <- c("Yard", "Meter", "Y", "M", "Long", "High", "Triple", "Pole", "Pentathlon", "Decathlon", "Heptathlon", "Shot Put", "Javelin", "Weight", "Hammer", "Discus", "Medley", "Race", "Steeple", "Mile", "Relay")
 
   event_string <-
     as.vector(outer(genders, events_parts, paste, sep = space1)) %>%
@@ -38,8 +42,7 @@ event_parse <- function(text) {
 
   #### Pull out event names ####
   events <- text %>%
-    .[purrr::map_lgl(.,
-                     stringr::str_detect,
+    .[stringr::str_detect(.,
                      event_string)]
 
   if (length(events) > 0) {
@@ -51,8 +54,9 @@ event_parse <- function(text) {
       stringr::str_replace(events, "1 M  ", "1 M ") ## Addition
     events <- stringr::str_replace(events, "([^1])0  ", "\\10 ")
     events <- stringr::str_replace(events, " Class [:alpha:]", "")
+    events <- stringr::str_replace(events, " m ", "m ")
     events <- events %>% # Addition
-      .[purrr::map_lgl(., stringr::str_detect, "[[:alpha:]]")] %>%
+      .[stringr::str_detect(., "[[:alpha:]]")] %>%
       stringr::str_replace_all("\\\n", "") %>%
       stringr::str_replace_all("\\(", "") %>%
       stringr::str_replace_all("\\)", "") %>%
@@ -65,7 +69,7 @@ event_parse <- function(text) {
       unlist(purrr::map(events, stringr::str_split, "\\s{2,}"),
              recursive = FALSE)
 
-    # dataframe for events with names and row number ranges
+    # data frame for events with names and row number ranges
     events <- events %>%
       list_transform() %>%
       dplyr::mutate(
